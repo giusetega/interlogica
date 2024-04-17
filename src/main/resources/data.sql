@@ -44,16 +44,16 @@ INSERT INTO ingredient (ingredient_id, ingredient_name, quantity, size) VALUES
 --  KEY ingredient_id (ingredient_id)
 --);
 
---INSERT INTO contains (sweets_id, ingredient_id, available_quantity) VALUES
---(1, 1, 10),
---(1, 4, 14),
---(1, 2, 32),
---(2, 1, 8),
---(2, 4, 4),
---(3, 2, 9),
---(3, 1, 14),
---(4, 3, 22),
---(4, 4, 1);
+INSERT INTO contains (sweets_id, ingredient_id, available_quantity) VALUES
+(1, 1, 10),
+(1, 4, 14),
+(1, 2, 32),
+(2, 1, 8),
+(2, 4, 4),
+(3, 2, 9),
+(3, 1, 14),
+(4, 3, 22),
+(4, 4, 1);
 --
 --ALTER TABLE contains ADD FOREIGN KEY (ingredient_id) REFERENCES ingredient (ingredient_id);
 --ALTER TABLE contains ADD FOREIGN KEY (sweets_id) REFERENCES sweets (sweets_id);

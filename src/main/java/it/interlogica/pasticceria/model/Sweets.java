@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Table(name="SWEETS")
 @Getter
@@ -24,5 +26,12 @@ public class Sweets {
 
     @Column(name = "price")
     private Float price;
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "contains",
+//            joinColumns = @JoinColumn(name = "sweets_id"),
+//            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+//    Set<Ingredient> containsIngredient;
 
 }

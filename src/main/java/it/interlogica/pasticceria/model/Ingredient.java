@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Table(name="INGREDIENT")
 @Getter
@@ -27,5 +29,8 @@ public class Ingredient {
 
     @Column(name = "size")
     private String size;
+
+//    @ManyToMany(mappedBy = "containsIngredient")
+//    Set<Sweets> usedBySweets;
 
 }
