@@ -1,5 +1,6 @@
 package it.interlogica.pasticceria.controller;
 
+import it.interlogica.pasticceria.dto.SweetDTO;
 import it.interlogica.pasticceria.model.Sweets;
 import it.interlogica.pasticceria.service.SweetsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class PasticceriaController {
     private SweetsService sweetsService;
 
     @GetMapping("/")
-    public List<Sweets> getSweets(){
+    public List<SweetDTO> getSweets(){
         return sweetsService.getSweets();
     }
 

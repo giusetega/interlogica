@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Entity
 @Table(name="SWEETS")
 @Getter
@@ -30,8 +28,29 @@ public class Sweets {
     @Column(name = "quantity")
     private Integer quantity;
 
-//    @Column()
+    @Column(name = "is_out_of_the_market", columnDefinition = "boolean default false")
     private Boolean isOutOfTheMarket;
+
+    @Column(name = "is_first_day")
+    private Boolean isFirstDay;
+
+    @Column(columnDefinition = "integer default 100")
+    private Integer valueFirstDay;
+
+    @Column(name = "is_second_day")
+    private Boolean isSecondDay;
+
+    @Column(columnDefinition = "integer default 80")
+    private Integer valueSecondDay;
+
+    @Column(name = "is_third_day")
+    private Boolean isThirdDay;
+
+    @Column(columnDefinition = "integer default 20")
+    private Integer valueThirdDay;
+
+//    @Column(name = "is_more_than_three_days")
+//    private Boolean isMoreThanThreeDays;
 
 //    @ManyToMany
 //    @JoinTable(
