@@ -3,9 +3,7 @@ package it.interlogica.pasticceria.controller;
 import it.interlogica.pasticceria.model.Sweets;
 import it.interlogica.pasticceria.service.SweetsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +19,20 @@ public class PasticceriaController {
     public List<Sweets> getSweets(){
         return sweetsService.getSweets();
     }
+
+    @PostMapping
+    public Sweets addSweets(@RequestBody Sweets sweets){
+        return sweetsService.addSweets(sweets);
+    }
+
+    @PutMapping
+    public Sweets updateSweets(@RequestBody Sweets sweets){
+        return sweetsService.updateSweets(sweets);
+    }
+
+    @DeleteMapping
+    public void deleteSweets(@RequestParam Integer id) throws Exception {
+        sweetsService.deleteSweets(id);
+    }
+
 }

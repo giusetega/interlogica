@@ -17,7 +17,7 @@ import java.util.Set;
 public class Sweets {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "sweets_id")
     private Integer id;
 
@@ -29,6 +29,9 @@ public class Sweets {
 
     @Column(name = "quantity")
     private Integer quantity;
+
+//    @Column()
+    private Boolean isOutOfTheMarket;
 
 //    @ManyToMany
 //    @JoinTable(
