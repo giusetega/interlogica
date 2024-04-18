@@ -27,6 +27,9 @@ public class Sweets {
     @Column(name = "price")
     private Float price;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
 //    @ManyToMany
 //    @JoinTable(
 //            name = "contains",

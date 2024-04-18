@@ -6,7 +6,7 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-class SweetsIngredientKey implements Serializable {
+public class SweetsIngredientKey implements Serializable {
 
     @Column(name = "sweets_id")
     Long sweetsId;

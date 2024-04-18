@@ -10,14 +10,22 @@
 --  price float(4) NOT NULL
 --) ;
 
+--
+--INSERT INTO sweets (sweets_id, sweets_name, price) VALUES
+--(1, 'Frolle', 6.4),
+--(2, 'Cannoli siciliani', 6.7),
+--(3, 'Maritozzi', 9),
+--(4, 'Panna cotta', 4.3),
+--(5, 'Tiramisu', 3.6),
+--(6, 'Strudel di mele', 8);
 
-INSERT INTO sweets (sweets_id, sweets_name, price) VALUES
-(1, 'Frolle', 6.4),
-(2, 'Cannoli siciliani', 6.7),
-(3, 'Maritozzi', 9),
-(4, 'Panna cotta', 4.3),
-(5, 'Tiramisu', 3.6),
-(6, 'Strudel di mele', 8);
+INSERT INTO sweets (sweets_id, sweets_name, price, quantity) VALUES
+(1, 'Frolle', 6.4, 24),
+(2, 'Cannoli siciliani', 6.7, 2),
+(3, 'Maritozzi', 9, 16),
+(4, 'Panna cotta', 4.3, 8),
+(5, 'Tiramisu', 3.6, 32),
+(6, 'Strudel di mele', 8, 9);
 
 
 -- -- INGREDIENT -----
@@ -44,16 +52,27 @@ INSERT INTO ingredient (ingredient_id, ingredient_name, quantity, size) VALUES
 --  KEY ingredient_id (ingredient_id)
 --);
 
-INSERT INTO contains (sweets_id, ingredient_id, available_quantity) VALUES
-(1, 1, 10),
-(1, 4, 14),
-(1, 2, 32),
-(2, 1, 8),
-(2, 4, 4),
-(3, 2, 9),
-(3, 1, 14),
-(4, 3, 22),
-(4, 4, 1);
+--INSERT INTO contains (sweets_id, ingredient_id, available_quantity) VALUES
+--(1, 1, 10),
+--(1, 4, 14),
+--(1, 2, 32),
+--(2, 1, 8),
+--(2, 4, 4),
+--(3, 2, 9),
+--(3, 1, 14),
+--(4, 3, 22),
+--(4, 4, 1);
+
+INSERT INTO contains (sweets_id, ingredient_id) VALUES
+(1, 1),
+(1, 4),
+(1, 2),
+(2, 1),
+(2, 4),
+(3, 2),
+(3, 1),
+(4, 3),
+(4, 4);
 --
 --ALTER TABLE contains ADD FOREIGN KEY (ingredient_id) REFERENCES ingredient (ingredient_id);
 --ALTER TABLE contains ADD FOREIGN KEY (sweets_id) REFERENCES sweets (sweets_id);

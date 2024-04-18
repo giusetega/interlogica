@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-class Contains {
+public class Contains {
 
     @EmbeddedId
     private SweetsIngredientKey id;
@@ -27,6 +27,6 @@ class Contains {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
-    @Column(name = "available_quantity")
-    private Integer availableQuantity;
+//    @Column(name = "available_quantity")
+//    private Integer availableQuantity;
 }
