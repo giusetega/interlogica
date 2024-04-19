@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/backend/v1")
 //@Log4j
+@CrossOrigin
 public class PasticceriaController {
 
     @Autowired

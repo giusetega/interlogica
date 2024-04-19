@@ -15,5 +15,5 @@ public class SweetDTO {
     private Float price;
     private Integer quantity;
     private Float totalPrice;
-
+    private String image;
 }

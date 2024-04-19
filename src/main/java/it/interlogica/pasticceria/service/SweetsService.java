@@ -35,7 +35,7 @@ public class SweetsService {
             return null;
 
         }
-        return new SweetDTO(sweet.getId(), sweet.getSweetsName(), sweet.getPrice(), sweet.getQuantity(), totalPrice);
+        return new SweetDTO(sweet.getId(), sweet.getSweetsName(), sweet.getPrice(), sweet.getQuantity(), totalPrice, sweet.getImage());
     }
 
 //    private Integer id;

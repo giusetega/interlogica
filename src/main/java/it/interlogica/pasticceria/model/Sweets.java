@@ -49,6 +49,9 @@ public class Sweets {
     @Column(columnDefinition = "integer default 20")
     private Integer valueThirdDay;
 
+    @Column(name = "image")
+    private String image;
+
 //    @Column(name = "is_more_than_three_days")
 //    private Boolean isMoreThanThreeDays;
 

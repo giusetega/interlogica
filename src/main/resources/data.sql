@@ -35,13 +35,13 @@
 --('Tiramisu', 3.6, 32),
 --('Strudel di mele', 8, 9);
 
-INSERT INTO sweets (sweets_name, price, quantity, is_first_day, is_second_day, is_third_day) VALUES
-('Frolle', 6.4, 24, true, false, false),
-('Cannoli siciliani', 6.7, 2, true, false, false),
-('Maritozzi', 9, 16, true, false, false),
-('Panna cotta', 4.3, 8, false, true, false),
-('Tiramisu', 3.6, 32, false, true, false),
-('Strudel di mele', 8, 9, false, false, true);
+INSERT INTO sweets (sweets_name, price, quantity, is_first_day, is_second_day, is_third_day, image) VALUES
+('Frolle', 6.4, 24, true, false, false, 'frolle.jpg'),
+('Cannoli siciliani', 6.7, 2, true, false, false, 'cannoli_siciliani.jpg'),
+('Maritozzi', 9, 16, true, false, false, 'maritozzi.jpg'),
+('Panna cotta', 4.3, 8, false, true, false, 'panna_cotta.jpg'),
+('Tiramisu', 3.6, 32, false, true, false, 'tiramisu.jpg'),
+('Strudel di mele', 8, 9, false, false, true, 'strudel_di_mele.jpg');
 
 
 -- -- INGREDIENT -----
