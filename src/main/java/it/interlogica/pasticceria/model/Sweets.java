@@ -19,8 +19,8 @@ public class Sweets {
     @Column(name = "sweets_id")
     private Integer id;
 
-    @Column(name = "sweets_name")
-    private String sweetsName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "price")
     private Float price;

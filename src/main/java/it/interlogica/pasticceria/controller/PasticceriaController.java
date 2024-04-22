@@ -11,18 +11,19 @@ import java.util.List;
 @RestController
 @RequestMapping("api/backend/v1")
 //@Log4j
-@CrossOrigin
+//@CrossOrigin
 public class PasticceriaController {
 
     @Autowired
     private SweetsService sweetsService;
 
+//    @CrossOrigin(origins = "*")
     @GetMapping("/")
     public List<SweetDTO> getSweets(){
         return sweetsService.getSweets();
     }
-
-    @PostMapping
+//    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/create")
     public Sweets addSweets(@RequestBody Sweets sweets){
         return sweetsService.addSweets(sweets);
     }

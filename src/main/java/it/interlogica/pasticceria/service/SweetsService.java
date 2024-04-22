@@ -7,10 +7,8 @@ import it.interlogica.pasticceria.model.Sweets;
 import it.interlogica.pasticceria.repository.SweetsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SweetsService {
@@ -19,23 +17,38 @@ public class SweetsService {
     private SweetsRepository sweetsRepository;
 
     public List<SweetDTO> getSweets() {
-        return sweetsRepository.findAll().stream().map(SweetsService::test).toList();
+        return sweetsRepository.findAll().stream().filter(sweet -> filterSweet(sweet)).map(sweet -> mapSweet(sweet)).toList();
     }
 
-    public static SweetDTO test(Sweets sweet) {
+    public static boolean filterSweet(Sweets sweet) {
         float totalPrice = 0;
-        if (sweet.getIsFirstDay()) {
+        if (sweet.getIsFirstDay()!= null && sweet.getIsFirstDay() && sweet.getValueFirstDay() != null ) {
+            return true;
+        } else if (sweet.getIsSecondDay()!= null && sweet.getIsSecondDay() && sweet.getValueSecondDay() != null ) {
+            return true;
+        } else if (sweet.getIsThirdDay()!= null &&  sweet.getIsThirdDay()  && sweet.getValueThirdDay() != null) {
+            return true;
+        } else {
+            // isMoreThanThreeDays
+            return false;
+
+        }
+    }
+
+    public static SweetDTO mapSweet(Sweets sweet) {
+        float totalPrice = 0;
+        if (sweet.getIsFirstDay()!= null && sweet.getIsFirstDay() && sweet.getValueFirstDay() != null ) {
             totalPrice = sweet.getPrice() * sweet.getValueFirstDay() / 100;
-        } else if (sweet.getIsSecondDay()) {
+        } else if (sweet.getIsSecondDay()!= null && sweet.getIsSecondDay() && sweet.getValueSecondDay() != null ) {
             totalPrice = sweet.getPrice() * sweet.getValueSecondDay() / 100;
-        } else if (sweet.getIsThirdDay()) {
+        } else if (sweet.getIsThirdDay()!= null &&  sweet.getIsThirdDay()  && sweet.getValueThirdDay() != null) {
             totalPrice = sweet.getPrice() * sweet.getValueThirdDay() / 100;
         } else {
             // isMoreThanThreeDays
             return null;
 
         }
-        return new SweetDTO(sweet.getId(), sweet.getSweetsName(), sweet.getPrice(), sweet.getQuantity(), totalPrice, sweet.getImage());
+        return new SweetDTO(sweet.getId(), sweet.getName(), sweet.getPrice(), sweet.getQuantity(), totalPrice, sweet.getImage());
     }
 
 //    private Integer id;
@@ -47,6 +60,9 @@ public class SweetsService {
     public Sweets addSweets(Sweets sweets) {
         sweets.setIsOutOfTheMarket(false);
         sweets.setIsFirstDay(true);
+        sweets.setValueFirstDay(100);
+        sweets.setValueSecondDay(80);
+        sweets.setValueThirdDay(20);
         return sweetsRepository.save(sweets);
     }
 

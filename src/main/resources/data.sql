@@ -35,7 +35,7 @@
 --('Tiramisu', 3.6, 32),
 --('Strudel di mele', 8, 9);
 
-INSERT INTO sweets (sweets_name, price, quantity, is_first_day, is_second_day, is_third_day, image) VALUES
+INSERT INTO sweets (name, price, quantity, is_first_day, is_second_day, is_third_day, image) VALUES
 ('Frolle', 6.4, 24, true, false, false, 'frolle.jpg'),
 ('Cannoli siciliani', 6.7, 2, true, false, false, 'cannoli_siciliani.jpg'),
 ('Maritozzi', 9, 16, true, false, false, 'maritozzi.jpg'),
