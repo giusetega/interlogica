@@ -3,16 +3,18 @@ package it.interlogica.pasticceria.controller;
 import it.interlogica.pasticceria.dto.SweetDTO;
 import it.interlogica.pasticceria.model.Sweets;
 import it.interlogica.pasticceria.service.SweetsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/backend/v1")
-//@Log4j
+@Slf4j
 public class PasticceriaController {
 
     @Autowired
@@ -32,7 +34,7 @@ public class PasticceriaController {
     public Sweets addSweets( @RequestPart("image") MultipartFile image,
                              @RequestParam("name") String name,
                              @RequestParam("price") Float price,
-                             @RequestParam("quantity") Integer quantity){
+                             @RequestParam("quantity") Integer quantity) throws IOException {
         return sweetsService.addSweets(image, name, price, quantity);
     }
 
