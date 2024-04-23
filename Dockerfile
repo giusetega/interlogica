@@ -7,17 +7,20 @@ ARG JAR_FILE=target/pasticceria-0.0.1-SNAPSHOT.jar
 # cd /opt/app
 WORKDIR /opt/app
 
-EXPOSE 8080
+VOLUME /tmp
 
 # cp target/spring-boot-web.jar /opt/app/app.jar
 COPY ${JAR_FILE} app.jar
+
+EXPOSE 8080
 
 # java -jar /opt/app/app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
 
 
+
 #FROM openjdk:17-jdk-alpine
-##VOLUME /tmp
+#VOLUME /tmp
 #EXPOSE 8080
 ##ARG JAR_FILE=target/spring-boot-docker.jar
 ##ARG JAR_FILE=target/pasticceria-0.0.1-SNAPSHOT.jar
@@ -40,3 +43,4 @@ ENTRYPOINT ["java","-jar","app.jar"]
 #docker buildx build . -t interlogica:v1.0.1
 #docker run -p 8080:8080 interlogica:v1.0.1
 #docker run -p 8080:8080 -h localhost interlogica:v1.0.1
+#docker run -d -p 8080:8080 -h localhost -v prova_volume:/tmp interlogica:v1.1.4

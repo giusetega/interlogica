@@ -60,11 +60,6 @@ public class SweetsService {
         return new SweetDTO(sweet.getId(), sweet.getName(), sweet.getPrice(), sweet.getQuantity(), totalPrice, sweet.getImage());
     }
 
-//    private Integer id;
-//    private String name;
-//    private Float price;
-//    private Integer quantity;
-//    private Float totalPrice;
 
     public Sweets addSweets(Sweets sweets) {
         sweets.setIsOutOfTheMarket(false);
@@ -79,11 +74,28 @@ public class SweetsService {
         File targetFile = null;
         if(multipartFile != null){
             log.debug("Start file saving");
+
             InputStream fileStream = multipartFile.getInputStream();
-            targetFile = new File("src/main/resources/static/images/" + multipartFile.getOriginalFilename());
+            targetFile = new File("/tmp/" + multipartFile.getOriginalFilename());
+
+            if (targetFile.getParentFile() != null && !targetFile.getParentFile().mkdirs()) {
+                // handle permission problems here
+                log.info("Directory " + targetFile.getParentFile().getAbsolutePath() + " does not exist");
+                if(!targetFile.getParentFile().mkdirs()){
+                    log.info("Directory " + targetFile.getParentFile().getAbsolutePath() + " created");
+                }
+            }
+                // either no parent directories were there or we have created missing directories
+            if (targetFile.createNewFile() || targetFile.isFile()) {
+                // ready to write your content
+                log.info("File " + targetFile.getParentFile().getAbsolutePath() + " created");
+            } else {
+                // handle directory here
+                log.info("General problem: " + targetFile.getParentFile().getAbsolutePath() );
+            }
             Files.copy(fileStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             IOUtils.closeQuietly(fileStream);
-            log.debug("End file saving");
+
         }
         Sweets sweets = new Sweets();
         sweets.setIsOutOfTheMarket(false);
