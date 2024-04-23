@@ -31,19 +31,19 @@ public class Sweets {
     @Column(name = "is_out_of_the_market", columnDefinition = "boolean default false")
     private Boolean isOutOfTheMarket;
 
-    @Column(name = "is_first_day")
+    @Column(name = "is_first_day", columnDefinition = "boolean default true")
     private Boolean isFirstDay;
 
     @Column(columnDefinition = "integer default 100")
     private Integer valueFirstDay;
 
-    @Column(name = "is_second_day")
+    @Column(name = "is_second_day", columnDefinition = "boolean default false")
     private Boolean isSecondDay;
 
     @Column(columnDefinition = "integer default 80")
     private Integer valueSecondDay;
 
-    @Column(name = "is_third_day")
+    @Column(name = "is_third_day", columnDefinition = "boolean default false")
     private Boolean isThirdDay;
 
     @Column(columnDefinition = "integer default 20")
