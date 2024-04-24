@@ -71,28 +71,12 @@ public class SweetsService {
     }
 
     public Sweets addSweets(MultipartFile multipartFile, String name, Float price, Integer quantity) throws IOException {
-        File targetFile = null;
+        File targetFile;
         if(multipartFile != null){
             log.debug("Start file saving");
 
             InputStream fileStream = multipartFile.getInputStream();
             targetFile = new File("/tmp/" + multipartFile.getOriginalFilename());
-
-            if (targetFile.getParentFile() != null && !targetFile.getParentFile().mkdirs()) {
-                // handle permission problems here
-                log.info("Directory " + targetFile.getParentFile().getAbsolutePath() + " does not exist");
-                if(!targetFile.getParentFile().mkdirs()){
-                    log.info("Directory " + targetFile.getParentFile().getAbsolutePath() + " created");
-                }
-            }
-                // either no parent directories were there or we have created missing directories
-            if (targetFile.createNewFile() || targetFile.isFile()) {
-                // ready to write your content
-                log.info("File " + targetFile.getParentFile().getAbsolutePath() + " created");
-            } else {
-                // handle directory here
-                log.info("General problem: " + targetFile.getParentFile().getAbsolutePath() );
-            }
             Files.copy(fileStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             IOUtils.closeQuietly(fileStream);
 
@@ -103,7 +87,7 @@ public class SweetsService {
         sweets.setValueFirstDay(100);
         sweets.setValueSecondDay(80);
         sweets.setValueThirdDay(20);
-        sweets.setImage(targetFile != null ? targetFile.getAbsolutePath() : null);
+        sweets.setImage(multipartFile != null ? multipartFile.getOriginalFilename() : null);
         sweets.setName(name);
         sweets.setPrice(price);
         sweets.setQuantity(quantity);
