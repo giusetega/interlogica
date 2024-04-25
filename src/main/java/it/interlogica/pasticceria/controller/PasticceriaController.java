@@ -38,13 +38,13 @@ public class PasticceriaController {
         return sweetsService.addSweets(image, name, price, quantity);
     }
 
-    @PutMapping
-    public Sweets updateSweets(@RequestBody Sweets sweets){
-        return sweetsService.updateSweets(sweets);
+    @PutMapping("/update/{id}")
+    public Sweets updateSweetsById(@PathVariable("id") Integer id, @RequestBody Sweets newSweet) throws Exception {
+        return sweetsService.updateSweetsById(id, newSweet);
     }
 
-    @DeleteMapping
-    public void deleteSweets(@RequestParam Integer id) throws Exception {
+    @DeleteMapping("/delete")
+    public void deleteSweets(@RequestParam("id") Integer id) throws Exception {
         sweetsService.deleteSweets(id);
     }
 

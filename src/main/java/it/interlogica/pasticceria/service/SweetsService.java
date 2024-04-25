@@ -31,7 +31,9 @@ public class SweetsService {
 
     public static boolean filterSweet(Sweets sweet) {
         float totalPrice = 0;
-        if (sweet.getIsFirstDay()!= null && sweet.getIsFirstDay() && sweet.getValueFirstDay() != null ) {
+        if(sweet.getIsOutOfTheMarket()){
+            return false;
+        }else if (sweet.getIsFirstDay()!= null && sweet.getIsFirstDay() && sweet.getValueFirstDay() != null ) {
             return true;
         } else if (sweet.getIsSecondDay()!= null && sweet.getIsSecondDay() && sweet.getValueSecondDay() != null ) {
             return true;
@@ -79,8 +81,8 @@ public class SweetsService {
             targetFile = new File("/tmp/" + multipartFile.getOriginalFilename());
             Files.copy(fileStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             IOUtils.closeQuietly(fileStream);
-
         }
+
         Sweets sweets = new Sweets();
         sweets.setIsOutOfTheMarket(false);
         sweets.setIsFirstDay(true);
@@ -94,8 +96,17 @@ public class SweetsService {
         return sweetsRepository.save(sweets);
     }
 
-    public Sweets updateSweets(Sweets sweets) {
-        return sweetsRepository.save(sweets);
+    public Sweets updateSweetsById(Integer id, Sweets newSweet) throws Exception {
+        return sweetsRepository.findById(id)
+                .map(sweet -> {
+                    sweet.setName(!newSweet.getName().isEmpty() ? newSweet.getName() : sweet.getName());
+                    sweet.setPrice(newSweet.getPrice() != null ? newSweet.getPrice() : sweet.getPrice());
+                    sweet.setQuantity(newSweet.getQuantity() != null ? newSweet.getQuantity() : sweet.getQuantity());
+                    return sweetsRepository.save(sweet);
+                })
+                .orElseGet(() -> {
+                    return sweetsRepository.save(newSweet);
+                });
     }
 
     public void deleteSweets(Integer id) throws Exception {

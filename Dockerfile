@@ -38,4 +38,4 @@ ENTRYPOINT ["java","-jar","app.jar"]
 #docker run -d -p 8080:8080 -h localhost -v prova_volume:/tmp interlogica:v1.1.4
 
 #docker buildx build . -t interlogica:v1.0.6
-#docker run -d -p 8080:8080 -h localhost -v prova_volume:/opt/app/static/tmp interlogica:v1.0.6
+#docker run -d -p 8080:8080 -h localhost -v prova_volume:/opt/app/static/tmp --name dockerized-backend interlogica:v1.0.6
