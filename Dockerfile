@@ -37,5 +37,16 @@ ENTRYPOINT ["java","-jar","app.jar"]
 #docker run -p 8080:8080 -h localhost interlogica:v1.0.1
 #docker run -d -p 8080:8080 -h localhost -v prova_volume:/tmp interlogica:v1.1.4
 
-#docker buildx build . -t interlogica:v1.0.6
-#docker run -d -p 8080:8080 -h localhost -v prova_volume:/opt/app/static/tmp --name dockerized-backend interlogica:v1.0.6
+# COMMANDI DA ESEGUIRE
+# VOLUME
+# docker volume create interlogica_volume
+
+# BACKEND
+# git checkout sul BE
+# docker buildx build . -t interlogica:v1.0.0
+# docker run -d -p 8080:8080 -h localhost -v interlogica_volume:/opt/app/static/tmp --name dockerized-backend interlogica:v1.0.0
+
+# FRONTEND
+# git checkout sul FE
+# docker buildx build . -t interlogica-fe:v1.0.0
+# docker run -d -p 3000:3000 -h localhost -v /app/node_modules -v interlogica_volume:/react-docker-interlogica/public/img --name dockerized-react-app interlogica-fe:v1.0.0

@@ -78,7 +78,7 @@ public class SweetsService {
             log.debug("Start file saving");
 
             InputStream fileStream = multipartFile.getInputStream();
-            targetFile = new File("/tmp/" + multipartFile.getOriginalFilename());
+            targetFile = new File("static/tmp/" + multipartFile.getOriginalFilename());
             Files.copy(fileStream, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             IOUtils.closeQuietly(fileStream);
         }
