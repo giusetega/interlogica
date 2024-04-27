@@ -1,6 +1,7 @@
 package it.interlogica.pasticceria.controller;
 
 import it.interlogica.pasticceria.dto.SweetDTO;
+import it.interlogica.pasticceria.dto.SweetDetailDTO;
 import it.interlogica.pasticceria.model.Sweets;
 import it.interlogica.pasticceria.service.SweetsService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,11 @@ public class PasticceriaController {
     @GetMapping("/")
     public List<SweetDTO> getSweets(){
         return sweetsService.getSweets();
+    }
+
+    @GetMapping("/detail/{id}")
+    public List<SweetDetailDTO> getSweetDetail(@PathVariable(name = "id", required = false) Integer id){
+        return sweetsService.getSweetDetail(id);
     }
 
     @PostMapping(path = "/create")

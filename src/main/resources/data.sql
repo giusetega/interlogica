@@ -52,7 +52,7 @@ INSERT INTO sweets (name, price, quantity, is_first_day, is_second_day, is_third
 --  size varchar(10) NOT NULL
 --);
 
-INSERT INTO ingredient (ingredient_id, ingredient_name, quantity, size) VALUES
+INSERT INTO ingredient (ingredient_id, name, quantity, size) VALUES
 (1, 'sugar', 200, 'gram'),
 (2, 'flour', 500, 'gram'),
 (3, 'eggs', 1, 'piece'),
@@ -79,7 +79,7 @@ INSERT INTO ingredient (ingredient_id, ingredient_name, quantity, size) VALUES
 --(4, 3, 22),
 --(4, 4, 1);
 
-INSERT INTO contains (sweets_id, ingredient_id) VALUES
+INSERT INTO CONTAINS_SWEETS_INGREDIENTS (sweets_id, ingredient_id) VALUES
 (1, 1),
 (1, 4),
 (1, 2),

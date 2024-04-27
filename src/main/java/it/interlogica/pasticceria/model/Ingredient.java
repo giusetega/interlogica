@@ -21,8 +21,8 @@ public class Ingredient {
     @Column(name = "ingredient_id")
     private Integer id;
 
-    @Column(name = "ingredient_name")
-    private String ingredientName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "quantity")
     private Integer quantity;

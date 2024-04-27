@@ -50,3 +50,7 @@ ENTRYPOINT ["java","-jar","app.jar"]
 # git checkout sul FE
 # docker buildx build . -t interlogica-fe:v1.0.0
 # docker run -d -p 3000:3000 -h localhost -v /app/node_modules -v interlogica_volume:/react-docker-interlogica/public/img --name dockerized-react-app interlogica-fe:v1.0.0
+
+#AWS
+# sudo  docker run -d -p 8080:8080  -h localhost -v interlogica_volume:/opt/app/static/tmp giusetega/interlogica:v1.0.0
+# sudo docker run -d -p 3000:3000 -h localhost -v /app/node_modules -v interlogica_volume:/react-docker-interlogica/public/img giusetega/interlogica_fe:v1.0.0

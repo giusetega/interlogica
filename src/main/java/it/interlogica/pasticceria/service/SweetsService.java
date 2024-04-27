@@ -3,6 +3,7 @@ package it.interlogica.pasticceria.service;
 //import it.interlogica.pasticceria.repository.SweetsRepository;
 
 import it.interlogica.pasticceria.dto.SweetDTO;
+import it.interlogica.pasticceria.dto.SweetDetailDTO;
 import it.interlogica.pasticceria.model.Sweets;
 import it.interlogica.pasticceria.repository.SweetsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,10 @@ public class SweetsService {
 
         }
         return new SweetDTO(sweet.getId(), sweet.getName(), sweet.getPrice(), sweet.getQuantity(), totalPrice, sweet.getImage());
+    }
+
+    public List<SweetDetailDTO> getSweetDetail(Integer id) {
+        return sweetsRepository.getSweetDetailDto(id);
     }
 
 
