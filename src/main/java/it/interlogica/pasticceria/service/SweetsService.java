@@ -4,7 +4,12 @@ package it.interlogica.pasticceria.service;
 
 import it.interlogica.pasticceria.dto.SweetDTO;
 import it.interlogica.pasticceria.dto.SweetDetailDTO;
+import it.interlogica.pasticceria.model.ContainsSweetsIngredients;
+import it.interlogica.pasticceria.model.Ingredient;
 import it.interlogica.pasticceria.model.Sweets;
+import it.interlogica.pasticceria.model.SweetsIngredientKey;
+import it.interlogica.pasticceria.repository.ContainsRepository;
+import it.interlogica.pasticceria.repository.IngredientRepository;
 import it.interlogica.pasticceria.repository.SweetsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -17,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +31,12 @@ public class SweetsService {
 
     @Autowired
     private SweetsRepository sweetsRepository;
+
+    @Autowired
+    private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private ContainsRepository containsRepository;
 
     public List<SweetDTO> getSweets() {
         return sweetsRepository.findAll().stream().filter(sweet -> filterSweet(sweet)).map(sweet -> mapSweet(sweet)).toList();
@@ -77,7 +89,8 @@ public class SweetsService {
         return sweetsRepository.save(sweets);
     }
 
-    public Sweets addSweets(MultipartFile multipartFile, String name, Float price, Integer quantity) throws IOException {
+    public Sweets addSweets(MultipartFile multipartFile, String name, Float price, Integer quantity,
+                            String sugar, String flour, String eggs, String milk ) throws IOException {
         File targetFile;
         if(multipartFile != null){
             log.debug("Start file saving");
@@ -98,7 +111,24 @@ public class SweetsService {
         sweets.setName(name);
         sweets.setPrice(price);
         sweets.setQuantity(quantity);
-        return sweetsRepository.save(sweets);
+        final Sweets sweetSave = sweetsRepository.save(sweets);
+
+
+         List<Ingredient> byIngredientName = ingredientRepository.findByIngredientName(sugar, flour, eggs, milk);
+
+         for (Ingredient ingredient : byIngredientName){
+             SweetsIngredientKey sweetsIngredientKey = new SweetsIngredientKey();
+             sweetsIngredientKey.setSweetsId(sweetSave.getId());
+             sweetsIngredientKey.setIngredientId(ingredient.getId());
+
+             ContainsSweetsIngredients containsSweetsIngredients = new ContainsSweetsIngredients();
+             containsSweetsIngredients.setId(sweetsIngredientKey);
+             containsSweetsIngredients.setSweetsId(sweets);
+             containsSweetsIngredients.setIngredientId(ingredient);
+             containsRepository.save(containsSweetsIngredients);
+         }
+
+        return  sweetSave;
     }
 
     public Sweets updateSweetsById(Integer id, Sweets newSweet) throws Exception {

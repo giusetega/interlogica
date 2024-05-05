@@ -2,7 +2,9 @@ package it.interlogica.pasticceria.controller;
 
 import it.interlogica.pasticceria.dto.SweetDTO;
 import it.interlogica.pasticceria.dto.SweetDetailDTO;
+import it.interlogica.pasticceria.model.Ingredient;
 import it.interlogica.pasticceria.model.Sweets;
+import it.interlogica.pasticceria.service.IngredientsService;
 import it.interlogica.pasticceria.service.SweetsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class PasticceriaController {
 
     @Autowired
     private SweetsService sweetsService;
+
+    @Autowired
+    private IngredientsService ingredientsService;
 
     @GetMapping("/")
     public List<SweetDTO> getSweets(){
@@ -40,8 +45,13 @@ public class PasticceriaController {
     public Sweets addSweets( @RequestPart("image") MultipartFile image,
                              @RequestParam("name") String name,
                              @RequestParam("price") Float price,
-                             @RequestParam("quantity") Integer quantity) throws IOException {
-        return sweetsService.addSweets(image, name, price, quantity);
+                             @RequestParam("quantity") Integer quantity,
+                             @RequestParam(value = "sugar", required = false) String sugar,
+                             @RequestParam(value = "flour",required = false) String flour,
+                             @RequestParam(value = "eggs", required = false) String eggs,
+                             @RequestParam(value = "milk", required = false) String milk
+    ) throws IOException {
+        return sweetsService.addSweets(image, name, price, quantity, sugar, flour, eggs, milk);
     }
 
     @PutMapping("/update/{id}")
@@ -54,4 +64,8 @@ public class PasticceriaController {
         sweetsService.deleteSweets(id);
     }
 
+    @GetMapping("/ingredients")
+    public List<Ingredient> getIngredients(){
+        return  ingredientsService.getIngredients();
+    }
 }
