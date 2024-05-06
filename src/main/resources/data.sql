@@ -88,7 +88,13 @@ INSERT INTO CONTAINS_SWEETS_INGREDIENTS (sweets_id, ingredient_id) VALUES
 (3, 2),
 (3, 1),
 (4, 3),
-(4, 4);
+(4, 4),
+(5, 2),
+(5, 3),
+(6, 1),
+(6, 2),
+(6, 3),
+(6, 4);
 --
 --ALTER TABLE contains ADD FOREIGN KEY (ingredient_id) REFERENCES ingredient (ingredient_id);
 --ALTER TABLE contains ADD FOREIGN KEY (sweets_id) REFERENCES sweets (sweets_id);
