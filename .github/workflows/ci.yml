@@ -44,7 +44,7 @@ jobs:
       - name: Build docker tag
         run: |
           echo "Packing application to registry..."
-          docker buildx build -t interlogica:$POM_VERSION .
+          docker buildx build -t interlogica:${{ github.sha }} .
 
       - name: Docker login
         uses: docker/login-action@v3
@@ -55,4 +55,4 @@ jobs:
       - name: Push docker tag
         run: |
           echo "Pushing to github..."
-          docker push interlogica:$POM_VERSION
+          docker push interlogica:${{ github.sha }}
