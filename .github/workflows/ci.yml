@@ -41,8 +41,18 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Build docker tag
+        run: |
+          echo "Packing application to registry..."
+          docker buildx build -t interlogica:$POM_VERSION .
+
       - name: Docker login
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Push docker tag
+        run: |
+          echo "Pushing to github..."
+          docker push interlogica:$POM_VERSION
