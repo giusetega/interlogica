@@ -53,7 +53,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v5
         with:
-          name: my-artifact
+          name: app-jar
 
       - name: List folder
         run: ls && ls target
