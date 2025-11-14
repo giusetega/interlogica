@@ -38,7 +38,7 @@ jobs:
         run: ls && ls target
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: app-jar
           path: target/*.jar
@@ -50,10 +50,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Download artifact
+      - name: Download jar
         uses: actions/download-artifact@v5
         with:
           name: app-jar
+          path: target
 
       - name: List folder
         run: ls && ls target
