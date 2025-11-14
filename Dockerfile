@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk
+FROM eclipse-temurin:17-jdk
 
 # Refer to Maven build -> finalName
 #ARG JAR_FILE=target/spring-boot-web.jar
