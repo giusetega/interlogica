@@ -20,8 +20,8 @@ jobs:
 
       - name: Sonar
         run: |
-          mvn sonar:sonar\
-          -Dsonar.projectKey=giusetega_interlogica\
-          -Dsonar.organization=giusetega\
-          -Dsonar.host.url=https://sonarcloud.io\
+          mvn sonar:sonar \
+          -Dsonar.projectKey=giusetega_interlogica \
+          -Dsonar.organization=giusetega \
+          -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=${{ secrets.SONAR_CLOUD_TOKEN }}
