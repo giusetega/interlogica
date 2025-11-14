@@ -2,7 +2,7 @@ FROM eclipse-temurin:17-jdk
 
 # Refer to Maven build -> finalName
 #ARG JAR_FILE=target/spring-boot-web.jar
-ARG JAR_FILE=target/pasticceria-0.0.1-SNAPSHOT.jar
+#ARG JAR_FILE=/app/target/*.jar
 
 # cd /opt/app
 WORKDIR /opt/app
@@ -12,7 +12,7 @@ WORKDIR /opt/app
 COPY /src/main/resources/static/images /opt/app/static/images
 
 # cp target/spring-boot-web.jar /opt/app/app.jar
-COPY ${JAR_FILE} app.jar
+COPY /target/*.jar app.jar
 
 EXPOSE 8080
 

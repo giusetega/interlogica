@@ -37,12 +37,24 @@ jobs:
       - name: List folder
         run: ls
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
+
   docker:
     name: Containerization
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
 
       - name: Build docker tag
         run: |
