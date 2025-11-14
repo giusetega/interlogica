@@ -35,7 +35,7 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_CLOUD_TOKEN }}
 
       - name: List folder
-        run: ls
+        run: ls && ls target
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

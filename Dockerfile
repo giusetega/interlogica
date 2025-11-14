@@ -12,7 +12,7 @@ WORKDIR /opt/app
 COPY /src/main/resources/static/images /opt/app/static/images
 
 # cp target/spring-boot-web.jar /opt/app/app.jar
-COPY /target/*.jar app.jar
+COPY target/*.jar app.jar
 
 EXPOSE 8080
 
