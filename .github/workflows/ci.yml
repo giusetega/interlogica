@@ -57,12 +57,16 @@ jobs:
           path: target
 
       - name: List folder
-        run: ls && ls target
+        run: |
+          echo ls
+          ls 
+          echo ls target
+          ls target
 
       - name: Build docker tag
         run: |
           echo "Packing application to registry..."
-          docker buildx build -t interlogica:${{ github.sha }} .
+          docker buildx build -t ${{ vars.DOCKERHUB_USERNAME }}/interlogica:${{ github.sha }} .
 
       - name: Docker login
         uses: docker/login-action@v3
@@ -73,4 +77,4 @@ jobs:
       - name: Push docker tag
         run: |
           echo "Pushing to github..."
-          docker push interlogica:${{ github.sha }}
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/interlogica:${{ github.sha }}
