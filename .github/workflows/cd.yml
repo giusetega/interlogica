@@ -24,4 +24,4 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
 
       - name: Get k8s details
-        run: kubectl get nodes cd kubec
+        run: kubectl get nodes
