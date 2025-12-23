@@ -1,22 +1,21 @@
 FROM eclipse-temurin:17-jdk
 
-# Refer to Maven build -> finalName
 #ARG JAR_FILE=target/spring-boot-web.jar
 ARG JAR_FILE=target/*.jar
 
 # cd /opt/app
-WORKDIR /opt/app
+WORKDIR /app
 
-#VOLUME /tmp
+VOLUME ["/app/static/tmp"]
 
-COPY /src/main/resources/static/images /opt/app/static/images
+COPY /src/main/resources/static/images /app/static/images
 
-# cp target/spring-boot-web.jar /opt/app/app.jar
+# cp target/spring-boot-web.jar /app/app.jar
 COPY ${JAR_FILE} app.jar
 
 EXPOSE 8080
 
-# java -jar /opt/app/app.jar
+# java -jar /app/app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
 
 

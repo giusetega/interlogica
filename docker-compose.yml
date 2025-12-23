@@ -1,0 +1,13 @@
+services:
+  backend:
+    build: .
+    image: interlogica:v1.0.0
+    container_name: dockerized-backend
+    ports:
+      - "8080:8080"
+    hostname: localhost
+    volumes:
+      - interlogica_volume:/app/static/tmp
+
+volumes:
+  interlogica_volume:
