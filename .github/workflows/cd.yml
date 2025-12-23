@@ -25,3 +25,6 @@ jobs:
 
       - name: Get k8s details
         run: kubectl get nodes
+
+      - name: Deploy to dev
+        run: kubectl apply -f kubernetes/dev
