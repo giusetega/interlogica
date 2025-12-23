@@ -21,7 +21,7 @@ jobs:
         uses: azure/k8s-set-context@v4
         with:
           method: kubeconfig
-          kubeconfig: {{ secrets.KUBECONFIG }}
+          kubeconfig: ${{ secrets.KUBECONFIG }}
 
       - name: Get k8s details
-        run: kubectl get nodes
+        run: kubectl get nodes cd kubec
