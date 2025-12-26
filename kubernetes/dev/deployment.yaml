@@ -19,3 +19,11 @@ spec:
           image: giusetega/interlogica@sha256:95f662542d92612ec0b665c04ab2aaa44f988f055c4abb138dee3f1884e9a260
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - name: interlogica-volume
+              mountPath: /app/static/tmp
+
+      volumes:
+        - name: interlogica-volume
+          persistentVolumeClaim:
+            claimName: interlogica-pvc
