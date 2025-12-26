@@ -27,4 +27,8 @@ jobs:
         run: kubectl get nodes
 
       - name: Deploy to dev
-        run: kubectl apply -f kubernetes/dev
+        run: |
+          kubectl apply -f kubernetes/dev
+          kubectl set image deployment/backend-deployment \
+            interlogica-be=giusetega/interlogica:${{ github.sha }} \
+            -n default

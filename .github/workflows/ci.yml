@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     env:
-      DOCKER_IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/interlogica
+      DOCKER_TAG: ${{ vars.DOCKERHUB_USERNAME }}/interlogica:${{ github.sha }}
     steps:
       - uses: actions/checkout@v5
 
@@ -56,7 +56,7 @@ jobs:
       - name: Build docker tag
         run: |
           echo "Packing application to registry..."
-          docker buildx build -t ${{ env.DOCKER_IMAGE }}:${{ github.sha }} .
+          docker buildx build -t ${{ env.DOCKER_TAG }} .
 
       - name: Docker login
         uses: docker/login-action@v3
@@ -67,4 +67,4 @@ jobs:
       - name: Push docker tag
         run: |
           echo "Pushing to github..."
-          docker push ${{ env.DOCKER_IMAGE }}:${{ github.sha }}
+          docker push ${{ env.DOCKER_TAG }}
