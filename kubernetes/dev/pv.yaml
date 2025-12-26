@@ -13,3 +13,11 @@ spec:
   storageClassName: manual
   local:
     path: /mnt/disks/ssd1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - aks-agentpool-27769270-vmss000000
