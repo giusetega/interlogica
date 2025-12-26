@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: interlogica-be
-          image: giusetega/interlogica@sha256:4fabc998c8a4051f6e924d44180dd2db6062204f563456c838e3ef74a770b2a0
+          image: giusetega/interlogica:latest
           ports:
             - containerPort: 8080
           volumeMounts:
