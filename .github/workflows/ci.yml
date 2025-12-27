@@ -72,7 +72,7 @@ jobs:
 #          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: GHCR login
-        run: ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username giusetega --password-stdin
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username giusetega --password-stdin
 
       - name: Push docker tag to docker hub and ghcr
         run: |
