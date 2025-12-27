@@ -73,6 +73,6 @@ jobs:
 
       - name: Push docker tag to docker hub and ghcr
         run: |
-          echo "Pushing to github..."
-          docker push ${{ env.DOCKER_TAG }}
+          echo "Pushing to github..." \
+          docker push ${{ env.DOCKER_TAG }} \
           docker push ${{ DOCKER_TAG_GHCR }}
