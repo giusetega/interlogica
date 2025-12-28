@@ -1,7 +1,7 @@
 services:
   backend:
     build: .
-    image: interlogica:v1.0.0
+    image: interlogica-be:v1.0.0
     container_name: dockerized-backend
     ports:
       - "8080:8080"
@@ -11,3 +11,4 @@ services:
 
 volumes:
   interlogica_volume:
+    external: true
