@@ -8,7 +8,16 @@ services:
     hostname: localhost
     volumes:
       - interlogica_volume:/app/static/tmp
+    networks:
+      - interlogica-net
 
 volumes:
   interlogica_volume:
     external: true
+
+networks:
+  interlogica-net:
+    external: true
+
+# docker volume create interlogica_volume
+# docker network create interlogica-net
