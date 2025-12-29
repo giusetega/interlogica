@@ -19,7 +19,8 @@ public class PasticceriaApplication {
 	}
 
 	@Bean
-	public void saveImages() throws IOException {
+	public String saveImages() throws IOException {
+
 		File dir = new File("static/images");
 		File[] directoryListing = dir.listFiles();
 		if (directoryListing != null) {
@@ -31,7 +32,9 @@ public class PasticceriaApplication {
 			}
 		} else {
 			log.info("Some problems with copying images");
+
 		}
+		return null;
 	}
 
 }
