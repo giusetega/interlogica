@@ -20,6 +20,7 @@ jobs:
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
 
       - name: Build with Maven
         run: mvn clean verify -B
@@ -67,14 +68,8 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-#      - name: GHCR login
-#        uses: docker/login-action@v3
-#        with:
-#          username: ${{ github.repository_owner }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: GHCR login
-        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username giusetega --password-stdin
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username ${{ github.repository_owner }} --password-stdin
 
       - name: Push docker tag to docker hub and ghcr
         run: |
