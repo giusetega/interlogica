@@ -35,10 +35,17 @@ jobs:
 
       - name: Deploy to ${{ inputs.environment }}
         run: |
-          kubectl apply -f kubernetes/${{ inputs.environment }} -f kubernetes/template
+          kubectl apply -k kubernetes
           kubectl set image deployment/backend-deployment \
             interlogica-be=${{ github.repository_owner }}/interlogica:${{ github.sha }} \
             -n ${{ vars.NAMESPACE }}
+
+#      - name: Deploy to ${{ inputs.environment }}
+#        run: |
+#          kubectl apply -f kubernetes/${{ inputs.environment }} -f kubernetes/template
+#          kubectl set image deployment/backend-deployment \
+#            interlogica-be=${{ github.repository_owner }}/interlogica:${{ github.sha }} \
+#            -n ${{ vars.NAMESPACE }}
 
 #      - name: Get ingress host
 #        id: ingress
