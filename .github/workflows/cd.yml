@@ -7,28 +7,41 @@ on:
       - "v*"
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
+  deploy-dev:
+    if: github.ref_type == 'branch' && github.ref_name == 'develop'
+    uses: ./.github/workflows/deploy-reusable.yml
+    with:
+      environment: dev
 
-      - name: Set Kubectl
-        uses: azure/setup-kubectl@v4
-        with:
-          version: 'v1.33.5'
+  deploy-prod:
+    if: github.ref_type == 'branch' && github.ref_name == 'main'
+    uses: ./.github/workflows/deploy-reusable.yml
+    with:
+      environment: prod
 
-      - name: Set Kubeconfig
-        uses: azure/k8s-set-context@v4
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
 
-      - name: Get k8s details
-        run: kubectl get nodes
-
-      - name: Deploy to dev
-        run: |
-          kubectl apply -f kubernetes/dev
-          kubectl set image deployment/backend-deployment \
-            interlogica-be=giusetega/interlogica:${{ github.sha }} \
-            -n default
+#  deploy:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v5
+#
+#      - name: Set Kubectl
+#        uses: azure/setup-kubectl@v4
+#        with:
+#          version: 'v1.33.5'
+#
+#      - name: Set Kubeconfig
+#        uses: azure/k8s-set-context@v4
+#        with:
+#          method: kubeconfig
+#          kubeconfig: ${{ secrets.KUBECONFIG }}
+#
+#      - name: Get k8s details
+#        run: kubectl get nodes
+#
+#      - name: Deploy to dev
+#        run: |
+#          kubectl apply -f kubernetes/dev
+#          kubectl set image deployment/backend-deployment \
+#            interlogica-be=giusetega/interlogica:${{ github.sha }} \
+#            -n default

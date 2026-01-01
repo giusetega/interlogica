@@ -1,0 +1,53 @@
+name: Reusable Deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    environment:
+      name: ${{ inputs.environment }}
+      url: https://${{ steps.set-ingress-host-address.outputs.APP_INGRESS_HOST }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set Kubectl
+        uses: azure/setup-kubectl@v4
+        with:
+          version: 'v1.33.5'
+
+      - name: Set Kubeconfig
+        uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Get k8s details
+        run: kubectl get nodes
+
+      - name: Deploy to dev
+        run: |
+          kubectl apply -f kubernetes/${{ inputs.environment }}
+          kubectl set image deployment/backend-deployment \
+            interlogica-be=${{ github.repository_owner }}/interlogica:${{ github.sha }} \
+            -n ${{ vars.NAMESPACE }}
+
+#      - name: Get ingress host
+#        id: ingress
+#        run: |
+#          HOST=$(kubectl get ingress backend-ingress \
+#            -n ${{ vars.NAMESPACE }} \
+#            -o jsonpath='{.spec.rules[0].host}')
+#          echo "host=$HOST" >> "$GITHUB_OUTPUT"
+
+      - name: Get ingress host
+        id: set-ingress-host-address
+        run: >
+          echo "APP_INGRESS_HOST=$(kubectl get ingress backend-ingress 
+          -n ${{ vars.NAMESPACE }} 
+          -o jsonpath='{.spec.rules[0].host}')" >> "$GITHUB_OUTPUT"
