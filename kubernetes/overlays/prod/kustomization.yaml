@@ -3,16 +3,9 @@ kind: Kustomization
 
 namespace: prod
 
-nameSuffix: -prod
-
 resources:
   - ../../base
 
 patches:
   - path: patch-deployment.yaml
 #  - path: patch-ingress.yaml
-
-#images:
-#  - name: giusetega/interlogica
-#    newName: ghcr.io/giusetega/interlogica
-#    newTag: latest
