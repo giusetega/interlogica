@@ -33,9 +33,9 @@ jobs:
       - name: Get k8s details
         run: kubectl get nodes
 
-      - name: Deploy to dev
+      - name: Deploy to ${{ inputs.environment }}
         run: |
-          kubectl apply -f kubernetes/${{ inputs.environment }}
+          kubectl apply -f kubernetes/${{ inputs.environment }} -f kubernetes/templates
           kubectl set image deployment/backend-deployment \
             interlogica-be=${{ github.repository_owner }}/interlogica:${{ github.sha }} \
             -n ${{ vars.NAMESPACE }}

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: dev
+  namespace: prod
   name: backend-deployment
   labels:
     app: backend
@@ -20,7 +20,7 @@ spec:
           image: giusetega/interlogica:latest
           ports:
             - containerPort: 8080
-          command: ["sh", "-c", "cp -r /seed-images/* /app/static/tmp/ || true"]
+#          command: ["sh", "-c", "cp -r /seed-images/* /app/static/tmp/ || true"]
           volumeMounts:
             - name: interlogica-volume
               mountPath: /app/static/tmp
