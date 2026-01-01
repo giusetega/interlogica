@@ -35,7 +35,7 @@ jobs:
 
       - name: Deploy to ${{ inputs.environment }}
         run: |
-          kubectl apply -k kubernetes
+          kubectl apply -k kubernetes/overlays/${{ inputs.environment }}
           kubectl set image deployment/backend-deployment \
             interlogica-be=${{ github.repository_owner }}/interlogica:${{ github.sha }} \
             -n ${{ vars.NAMESPACE }}
