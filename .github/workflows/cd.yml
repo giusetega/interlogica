@@ -12,12 +12,14 @@ jobs:
     uses: ./.github/workflows/deploy-reusable.yml
     with:
       environment: dev
+    secrets: inherit
 
   deploy-prod:
     if: github.ref_type == 'branch' && github.ref_name == 'main'
     uses: ./.github/workflows/deploy-reusable.yml
     with:
       environment: prod
+    secrets: inherit
 
 
 #  deploy:
