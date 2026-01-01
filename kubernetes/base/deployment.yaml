@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: interlogica-be
-          image: giusetega/interlogica:latest
+          image: ghcr.io/giusetega/interlogica:latest
           ports:
             - containerPort: 8080
 #          command: ["sh", "-c", "cp -r /seed-images/* /app/static/tmp/ || true"]
