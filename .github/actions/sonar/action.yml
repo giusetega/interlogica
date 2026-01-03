@@ -26,7 +26,7 @@ runs:
           -Dsonar.host.url=https://sonarcloud.io
 
     - name: Print Quality Gate & New Code Coverage
-      shell: bash
+#      shell: bash
       env:
         SONAR_TOKEN: ${{ inputs.sonar_token }}
       run: |
@@ -47,6 +47,6 @@ runs:
         echo "Coverage: $COVERAGE% (threshold 80%)
         
         if [ "$QG_STATUS" != "OK" ]; then
-        echo "Quality Gate FAILED ❌"
+        echo "Quality Gate FAILED"
         exit 1
         fi"
