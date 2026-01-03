@@ -30,20 +30,21 @@ runs:
       env:
         SONAR_TOKEN: ${{ inputs.sonar_token }}
       run: |
-        PROJECT_KEY="${{ inputs.project_key }}"
+        PROJECT_KEY="giusetega_interlogica"
         SONAR_API="https://sonarcloud.io/api"
 
-        QG_STATUS=$(curl -s -u $SONAR_TOKEN: \
+        echo "Fetching Quality Gate status..."
+        QG_STATUS=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
           "$SONAR_API/qualitygates/project_status?projectKey=$PROJECT_KEY" \
           | jq -r '.projectStatus.status')
 
-        NEW_COVERAGE=$(curl -s -u $SONAR_TOKEN: \
-          "$SONAR_API/measures/component?component=$PROJECT_KEY&metricKeys=new_coverage" \
-          | jq -r '.component.measures[0].value // "N/A"')
+        COVERAGE=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
+          "$SONAR_API/measures/component?component=$PROJECT_KEY&metricKeys=coverage" \
+          | jq -r '.component.measures[0].value')
 
         echo ""
         echo "Quality Gate: $QG_STATUS"
-        echo "New Code Coverage: $NEW_COVERAGE% (threshold 80%)"
+        echo "Coverage: $COVERAGE% (threshold 80%)"
 
 #    - name: SonarCloud Quality Gate
 #      uses: sonarsource/sonarqube-quality-gate-action@v1
