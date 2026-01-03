@@ -18,7 +18,7 @@ runs:
       shell: bash
       env:
         SONAR_TOKEN: ${{ inputs.sonar_token }}
-        GITHUB_TOKEN: ${{ inputs.github_token }}
+#        GITHUB_TOKEN: ${{ inputs.github_token }}
       run: |
         mvn -B verify sonar:sonar \
           -Dsonar.projectKey=${{ inputs.project_key }} \
