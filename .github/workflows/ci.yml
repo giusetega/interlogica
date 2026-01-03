@@ -89,4 +89,10 @@ jobs:
       - name: Build docker tag and push
         run: |
           echo "Packing application to registry..."
-          docker buildx build -t ${{ env.DOCKER_TAG }} -t ${{ env.DOCKER_TAG_GHCR }} --push .
+          docker buildx build -t ${{ env.DOCKER_TAG }} -t ${{ env.DOCKER_TAG_GHCR }} .
+
+      - name: Push docker tag to docker hub and ghcr
+        run: |
+          echo "Pushing to github..."
+          docker push ${{ env.DOCKER_TAG }}
+          docker push ${{ env.DOCKER_TAG_GHCR }}

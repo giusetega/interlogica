@@ -26,7 +26,7 @@ runs:
           -Dsonar.host.url=https://sonarcloud.io
 
     - name: Print Quality Gate & New Code Coverage
-#      shell: bash
+      shell: bash
       env:
         SONAR_TOKEN: ${{ inputs.sonar_token }}
       run: |
