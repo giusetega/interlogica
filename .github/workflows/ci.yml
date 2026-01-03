@@ -58,7 +58,7 @@ jobs:
 
       - name: SonarCloud Scan
         run: >
-          mvn -B sonar:sonar
+          mvn verify -B sonar:sonar
           -Dsonar.projectKey=giusetega_interlogica
           -Dsonar.organization=giusetega
           -Dsonar.host.url=https://sonarcloud.io
