@@ -49,44 +49,13 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
 
-      - uses: ./.github/actions/sonar
+      - name: Sonar action
+        uses: ./.github/actions/sonar
         with:
           project_key: giusetega_interlogica
           organization: giusetega
           sonar_token: ${{ secrets.SONAR_CLOUD_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-
-#      - name: SonarCloud Scan
-#        run: >
-#          mvn verify -B sonar:sonar
-#          -Dsonar.projectKey=giusetega_interlogica
-#          -Dsonar.organization=giusetega
-#          -Dsonar.host.url=https://sonarcloud.io
-#          -Dsonar.login=${{ secrets.SONAR_CLOUD_TOKEN }}
-#
-#      - name: Print Quality Gate & New Code Coverage
-#        run: |
-#          PROJECT_KEY="giusetega_interlogica"
-#          SONAR_API="https://sonarcloud.io/api"
-#
-#          echo "Fetching Quality Gate status..."
-#          QG_STATUS=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
-#            "$SONAR_API/qualitygates/project_status?projectKey=$PROJECT_KEY" \
-#            | jq -r '.projectStatus.status')
-#
-#          NEW_COVERAGE=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
-#            "$SONAR_API/measures/component?component=$PROJECT_KEY&metricKeys=new_coverage" \
-#            | jq -r '.component.measures[0].value')
-#
-#          echo ""
-#          echo "Quality Gate: $QG_STATUS"
-#          echo "New Code Coverage: ${NEW_COVERAGE}% (threshold 80%)"
-
-#      - name: SonarCloud Quality Gate
-#        uses: sonarsource/sonarqube-quality-gate-action@v1
-#        timeout-minutes: 5
-#        env:
-#          SONAR_TOKEN: ${{ secrets.SONAR_CLOUD_TOKEN }}
 
   docker:
     name: Build & Push Docker Image
