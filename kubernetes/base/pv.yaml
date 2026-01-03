@@ -12,7 +12,7 @@ spec:
 #  storageClassName: local-storage
   storageClassName: local-storage
   local:
-    path: /mnt/local-data
+    path: mnt/local-data
   nodeAffinity:
     required:
       nodeSelectorTerms:
