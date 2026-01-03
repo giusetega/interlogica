@@ -60,23 +60,30 @@ jobs:
       - name: Print Quality Gate & Coverage
         run: |
           PROJECT_KEY="giusetega_interlogica"
+          SONAR_API="https://sonarcloud.io/api"
 
           echo "Fetching Quality Gate status..."
           QG_STATUS=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
-            "https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY" \
+            "$SONAR_API/qualitygates/project_status?projectKey=$PROJECT_KEY" \
             | jq -r '.projectStatus.status')
 
           COVERAGE=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
-            "https://sonarcloud.io/api/measures/component?component=$PROJECT_KEY&metricKeys=coverage" \
+            "$SONAR_API/measures/component?component=$PROJECT_KEY&metricKeys=coverage" \
             | jq -r '.component.measures[0].value')
 
           THRESHOLD=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
-            "https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY" \
+            "$SONAR_API/qualitygates/project_status?projectKey=$PROJECT_KEY" \
             | jq -r '.projectStatus.conditions[] | select(.metricKey=="coverage") | .errorThreshold')
 
           echo ""
           echo "Quality Gate: $QG_STATUS"
           echo "Coverage: $COVERAGE% (threshold $THRESHOLD%)"
+
+      - name: SonarCloud Quality Gate
+        uses: sonarsource/sonarqube-quality-gate-action@v1
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_CLOUD_TOKEN }}
 
   docker:
     name: Build & Push Docker Image
