@@ -1,0 +1,50 @@
+name: SonarCloud Analysis
+description: Run SonarCloud scan, print Quality Gate and New Code Coverage
+
+inputs:
+  project_key:
+    required: true
+  organization:
+    required: true
+  sonar_token:
+    required: true
+  github_token:
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Run SonarCloud Scan
+      shell: bash
+      env:
+        SONAR_TOKEN: ${{ inputs.sonar_token }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      run: |
+        mvn -B verify sonar:sonar \
+          -Dsonar.projectKey=${{ inputs.project_key }} \
+          -Dsonar.organization=${{ inputs.organization }}
+
+    - name: Print Quality Gate & New Code Coverage
+      shell: bash
+      env:
+        SONAR_TOKEN: ${{ inputs.sonar_token }}
+      run: |
+        PROJECT_KEY="${{ inputs.project_key }}"
+        SONAR_API="https://sonarcloud.io/api"
+
+        QG_STATUS=$(curl -s -u $SONAR_TOKEN: \
+          "$SONAR_API/qualitygates/project_status?projectKey=$PROJECT_KEY" \
+          | jq -r '.projectStatus.status')
+
+        NEW_COVERAGE=$(curl -s -u $SONAR_TOKEN: \
+          "$SONAR_API/measures/component?component=$PROJECT_KEY&metricKeys=new_coverage" \
+          | jq -r '.component.measures[0].value // "N/A"')
+
+        echo ""
+        echo "Quality Gate: $QG_STATUS"
+        echo "New Code Coverage: $NEW_COVERAGE% (threshold 80%)"
+
+#    - name: SonarCloud Quality Gate
+#      uses: sonarsource/sonarqube-quality-gate-action@v1
+#      env:
+#        SONAR_TOKEN: ${{ inputs.sonar_token }}
