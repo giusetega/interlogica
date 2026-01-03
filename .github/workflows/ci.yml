@@ -31,14 +31,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean verify -B
 
-#      - name: SonarCloud Scan
-#        run: >
-#          mvn -B sonar:sonar
-#          -Dsonar.projectKey=giusetega_interlogica
-#          -Dsonar.organization=giusetega
-#          -Dsonar.host.url=https://sonarcloud.io
-#          -Dsonar.login=${{ secrets.SONAR_CLOUD_TOKEN }}
-
       - name: Upload artifact
         uses: actions/upload-artifact@v5
         with:
@@ -48,6 +40,7 @@ jobs:
   sonar:
     runs-on: ubuntu-latest
     needs: build
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v5
 
@@ -57,17 +50,33 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
 
       - name: SonarCloud Scan
-#        run: >
-#          mvn verify -B sonar:sonar
-#          -Dsonar.projectKey=giusetega_interlogica
-#          -Dsonar.organization=giusetega
-#          -Dsonar.host.url=https://sonarcloud.io
-#          -Dsonar.login=${{ secrets.SONAR_CLOUD_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_CLOUD_TOKEN }}
-        run: mvn verify -B sonar:sonar
+        run: >
+          mvn verify -B sonar:sonar
+          -Dsonar.projectKey=giusetega_interlogica
+          -Dsonar.organization=giusetega
+          -Dsonar.host.url=https://sonarcloud.io
+          -Dsonar.login=${{ secrets.SONAR_CLOUD_TOKEN }}
 
+      - name: Print Quality Gate & Coverage
+        run: |
+          PROJECT_KEY="giusetega_interlogica"
+
+          echo "Fetching Quality Gate status..."
+          QG_STATUS=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
+            "https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY" \
+            | jq -r '.projectStatus.status')
+
+          COVERAGE=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
+            "https://sonarcloud.io/api/measures/component?component=$PROJECT_KEY&metricKeys=coverage" \
+            | jq -r '.component.measures[0].value')
+
+          THRESHOLD=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
+            "https://sonarcloud.io/api/qualitygates/project_status?projectKey=$PROJECT_KEY" \
+            | jq -r '.projectStatus.conditions[] | select(.metricKey=="coverage") | .errorThreshold')
+
+          echo ""
+          echo "Quality Gate: $QG_STATUS"
+          echo "Coverage: $COVERAGE% (threshold $THRESHOLD%)"
 
   docker:
     name: Build & Push Docker Image
@@ -102,10 +111,3 @@ jobs:
         run: |
           echo "Packing application to registry..."
           docker buildx build -t ${{ env.DOCKER_TAG }} -t ${{ env.DOCKER_TAG_GHCR }} --push .
-
-
-#      - name: Push docker tag to docker hub and ghcr
-#        run: |
-#          echo "Pushing to github..."
-#          docker push ${{ env.DOCKER_TAG }}
-#          docker push ${{ env.DOCKER_TAG_GHCR }}
