@@ -28,7 +28,7 @@ runs:
     - name: Print Quality Gate & New Code Coverage
       shell: bash
       env:
-        SONAR_TOKEN: ${{ inputs.sonar_token }}
+        SONAR_CLOUD_TOKEN: ${{ inputs.sonar_token }}
       run: |
         PROJECT_KEY="giusetega_interlogica"
         SONAR_API="https://sonarcloud.io/api"
