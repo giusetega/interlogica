@@ -28,17 +28,17 @@ runs:
     - name: Print Quality Gate & New Code Coverage
       shell: bash
       env:
-        SONAR_CLOUD_TOKEN: ${{ inputs.sonar_token }}
+        SONAR_TOKEN: ${{ inputs.sonar_token }}
       run: |
-        PROJECT_KEY="giusetega_interlogica"
+        PROJECT_KEY="${{ inputs.project_key }}"
         SONAR_API="https://sonarcloud.io/api"
 
         echo "Fetching Quality Gate status..."
-        QG_STATUS=$(curl -s -u ${{ env.SONAR_CLOUD_TOKEN }}: \
+        QG_STATUS=$(curl -s -u ${{ env.SONAR_TOKEN }}: \
           "$SONAR_API/qualitygates/project_status?projectKey=$PROJECT_KEY" \
           | jq -r '.projectStatus.status')
 
-        COVERAGE=$(curl -s -u ${{ env.SONAR_CLOUD_TOKEN }}: \
+        COVERAGE=$(curl -s -u ${{ env.SONAR_TOKEN }}: \
           "$SONAR_API/measures/component?component=$PROJECT_KEY&metricKeys=coverage" \
           | jq -r '.component.measures[0].value')
 
@@ -46,7 +46,12 @@ runs:
         echo "Quality Gate: $QG_STATUS"
         echo "Coverage: $COVERAGE% (threshold 80%)"
 
+    - name: Check scannerwork folder
+      run: ls -la .scannerwork/
+
     - name: SonarCloud Quality Gate
       uses: sonarsource/sonarqube-quality-gate-action@v1
+      with:
+        scanMetadataReportFile: .scannerwork/report-task.txt
       env:
         SONAR_TOKEN: ${{ inputs.sonar_token }}
