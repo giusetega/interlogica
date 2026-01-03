@@ -47,6 +47,7 @@ runs:
         echo "Coverage: $COVERAGE% (threshold 80%)"
 
     - name: Check scannerwork folder
+      shell: bash
       run: ls -la .scannerwork/
 
     - name: SonarCloud Quality Gate
