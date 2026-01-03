@@ -84,12 +84,12 @@ jobs:
       - name: GHCR login
         run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username ${{ github.repository_owner }} --password-stdin
 
-      - uses: docker/setup-buildx-action@v3
+#      - uses: docker/setup-buildx-action@v3
 
       - name: Build docker tag and push
         run: |
           echo "Packing application to registry..."
-          docker buildx build -t ${{ env.DOCKER_TAG }} -t ${{ env.DOCKER_TAG_GHCR }} .
+          docker build -t ${{ env.DOCKER_TAG }} -t ${{ env.DOCKER_TAG_GHCR }} .
 
       - name: Push docker tag to docker hub and ghcr
         run: |
