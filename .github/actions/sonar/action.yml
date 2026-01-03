@@ -34,11 +34,11 @@ runs:
         SONAR_API="https://sonarcloud.io/api"
 
         echo "Fetching Quality Gate status..."
-        QG_STATUS=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
+        QG_STATUS=$(curl -s -u ${{ env.SONAR_CLOUD_TOKEN }}: \
           "$SONAR_API/qualitygates/project_status?projectKey=$PROJECT_KEY" \
           | jq -r '.projectStatus.status')
 
-        COVERAGE=$(curl -s -u ${{ secrets.SONAR_CLOUD_TOKEN }}: \
+        COVERAGE=$(curl -s -u ${{ env.SONAR_CLOUD_TOKEN }}: \
           "$SONAR_API/measures/component?component=$PROJECT_KEY&metricKeys=coverage" \
           | jq -r '.component.measures[0].value')
 
