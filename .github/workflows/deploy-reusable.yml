@@ -11,7 +11,7 @@ on:
         required: true
 
 jobs:
-  deploy:
+  reusable-deploy:
     environment:
       name: ${{ inputs.environment }}
       url: https://${{ steps.set-ingress-host-address.outputs.APP_INGRESS_HOST }}
